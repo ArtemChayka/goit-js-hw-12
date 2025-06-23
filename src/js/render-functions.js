@@ -1,6 +1,8 @@
 
-const loader = document.querySelector('.loader')
+export const loader = document.querySelector('.loader')
 export const loadBtn = document.querySelector('.load-more-btn')
+export const list = document.querySelector('.gallery')
+
 
 export function createGallery(images) {
     return images.map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => `
@@ -15,10 +17,6 @@ export function createGallery(images) {
     `).join('')
 }
 
-export function clearGallery() {
-    list.innerHTML = ''
-}
-
 export function showLoader() {
     loader.classList.remove('hidden');
 }
@@ -30,4 +28,7 @@ export function showLoadMoreButton() {
 }
 export function hideLoadMoreButton() {
     loadBtn.classList.add('load-more-btn-hidden');
+}
+export function clearGallery() {
+    list.innerHTML = ''
 }

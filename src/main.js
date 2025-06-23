@@ -3,16 +3,14 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 import { getImagesByQuery } from './js/pixabay-api'
-import { createGallery, showLoader, hideLoader, showLoadMoreButton, hideLoadMoreButton, loadBtn, clearGallery} from './js/render-functions'
+import { clearGallery, createGallery, showLoader, hideLoader, showLoadMoreButton, hideLoadMoreButton, loadBtn, list } from './js/render-functions'
 
-let lightbox = new Simplelightbox('.gallery a')
-const list = document.querySelector('.gallery')
+
 const form = document.querySelector('.form')
-
-
-let page = 1; 
-let currentQuery = ''; 
-let totalHits = 0; 
+let lightbox = new Simplelightbox('.gallery a')
+let page = 1;
+let currentQuery = '';
+let totalHits = 0;
 
 
 
@@ -28,7 +26,8 @@ form.addEventListener('submit', async (event) => {
         })
         return
     }
-    currentQuery = query; 
+    currentQuery = query;  
+    page = 1;
 
     clearGallery();
     showLoader();
@@ -36,9 +35,8 @@ form.addEventListener('submit', async (event) => {
 
     try {
         const res = await getImagesByQuery(currentQuery, page);
+        // console.log(res);
         totalHits = res.totalHits; 
-        // console.log(totalHits);
-
 
         if (res.hits.length === 0) {
             iziToast.error({
@@ -73,16 +71,18 @@ form.addEventListener('submit', async (event) => {
 
 
 
+
 loadBtn.addEventListener('click', handleLoadMore);
 async function handleLoadMore() {
-    page++; 
-    showLoader(); 
+    page++;
+    showLoader();
 
     try {
-        const data = await getImagesByQuery(currentQuery, page); 
-
+        const data = await getImagesByQuery(currentQuery, page);
+        // console.log(data);
+        
         list.insertAdjacentHTML('beforeend', createGallery(data.hits));
-        lightbox.refresh(); 
+        lightbox.refresh();
 
         const { height: cardHeight } = list.firstElementChild.getBoundingClientRect();
         window.scrollBy({
@@ -97,6 +97,6 @@ async function handleLoadMore() {
             position: 'topRight'
         });
     } finally {
-        hideLoader(); 
+        hideLoader();
     }
 }
