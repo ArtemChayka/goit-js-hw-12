@@ -3,20 +3,17 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 import { getImagesByQuery } from './js/pixabay-api'
-import { createGallery, showLoader, hideLoader, showLoadMoreButton, hideLoadMoreButton, loadBtn } from './js/render-functions'
+import { createGallery, showLoader, hideLoader, showLoadMoreButton, hideLoadMoreButton, loadBtn, clearGallery} from './js/render-functions'
 
 let lightbox = new Simplelightbox('.gallery a')
 const list = document.querySelector('.gallery')
 const form = document.querySelector('.form')
 
+
 let page = 1; 
 let currentQuery = ''; 
 let totalHits = 0; 
 
-
-function clearGallery() {
-    list.innerHTML = ''
-}
 
 
 form.addEventListener('submit', async (event) => {
@@ -73,11 +70,12 @@ form.addEventListener('submit', async (event) => {
     }
 })
 
-loadBtn.addEventListener('click', handleLoadMore);
 
+
+
+loadBtn.addEventListener('click', handleLoadMore);
 async function handleLoadMore() {
     page++; 
-
     showLoader(); 
 
     try {

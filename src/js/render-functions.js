@@ -15,6 +15,10 @@ export function createGallery(images) {
     `).join('')
 }
 
+export function clearGallery() {
+    list.innerHTML = ''
+}
+
 export function showLoader() {
     loader.classList.remove('hidden');
 }
