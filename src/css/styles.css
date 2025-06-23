@@ -3,3 +3,11 @@
 @import url('./reset.css');
 @import url('./base.css');
 @import url('./container.css');
+
+
+.load-more-btn-hidden {
+    display: none;
+}
+.load-more-btn{
+    display: block;
+}
