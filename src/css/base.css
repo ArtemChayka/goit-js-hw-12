@@ -22,6 +22,7 @@ body {
   min-width: 100vw;
   min-height: 100vh;
   margin: 0;
+  padding: 12px;
 }
 
 main {
@@ -29,4 +30,22 @@ main {
 }
 main:has(.back-link) {
   text-align: center;
+}
+
+button {
+  border-radius: 8px;
+  width: 91px;
+  height: 21px;
+  background-color: #4e75ff;
+  border: none;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
 }

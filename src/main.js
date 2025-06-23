@@ -9,7 +9,7 @@ let lightbox = new Simplelightbox('.gallery a')
 const list = document.querySelector('.gallery')
 const form = document.querySelector('.form')
 
-let page = 1; // ✅ Начинаем с 1, а не с 3
+let page = 1; 
 let currentQuery = ''; // ✅ Переименовали для ясности
 let totalHits = 0; // ✅ Добавили для контроля пагинации
 
