@@ -5,8 +5,9 @@
 @import url('./container.css');
 
 
-.load-more-btn-hidden {
-    display: none;
+.load-more-btn-hidden,
+.hidden {
+    display: none !important;
 }
 .load-more-btn{
     display: block;

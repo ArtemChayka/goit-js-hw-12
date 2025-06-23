@@ -1,7 +1,6 @@
 
-
-
-
+const loader = document.querySelector('.loader')
+export const loadBtn = document.querySelector('.load-more-btn')
 
 export function createGallery(images) {
     return images.map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => `
@@ -14,4 +13,17 @@ export function createGallery(images) {
 </div>
 </a></li>
     `).join('')
+}
+
+export function showLoader() {
+    loader.classList.remove('hidden');
+}
+export function hideLoader() {
+    loader.classList.add('hidden');
+}
+export function showLoadMoreButton() {
+    loadBtn.classList.remove('load-more-btn-hidden');
+}
+export function hideLoadMoreButton() {
+    loadBtn.classList.add('load-more-btn-hidden');
 }
