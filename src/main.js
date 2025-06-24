@@ -11,6 +11,7 @@ let lightbox = new Simplelightbox('.gallery a')
 let page = 1;
 let currentQuery = '';
 let totalHits = 0;
+const perPage = 15;
 
 
 
@@ -19,14 +20,14 @@ form.addEventListener('submit', async (event) => {
 
     const query = event.currentTarget.elements["search-text"].value.trim()
     // console.log(query);
-    
+
     if (!query) {
         iziToast.warning({
             message: 'Please enter a search term!'
         })
         return
     }
-    currentQuery = query;  
+    currentQuery = query;
     page = 1;
 
     clearGallery();
@@ -36,7 +37,8 @@ form.addEventListener('submit', async (event) => {
     try {
         const res = await getImagesByQuery(currentQuery, page);
         // console.log(res);
-        totalHits = res.totalHits; 
+        totalHits = res.totalHits;
+        const totalPages = Math.ceil(totalHits / perPage)
 
         if (res.hits.length === 0) {
             iziToast.error({
@@ -44,10 +46,9 @@ form.addEventListener('submit', async (event) => {
                 position: 'topRight'
             })
         } else {
-            list.insertAdjacentHTML('beforeend', createGallery(res.hits))
-            lightbox.refresh(); 
+            createGallery(res.hits, lightbox)
 
-            if (res.hits.length < totalHits) {
+            if (page < totalPages) {
                 showLoadMoreButton()
             } else {
                 hideLoadMoreButton();
@@ -75,20 +76,27 @@ form.addEventListener('submit', async (event) => {
 loadBtn.addEventListener('click', handleLoadMore);
 async function handleLoadMore() {
     page++;
-    showLoader();
+
+    const totalPages = Math.ceil(totalHits / perPage)
 
     try {
         const data = await getImagesByQuery(currentQuery, page);
         // console.log(data);
-        
-        list.insertAdjacentHTML('beforeend', createGallery(data.hits));
-        lightbox.refresh();
+
+        createGallery(data.hits, lightbox);
 
         const { height: cardHeight } = list.firstElementChild.getBoundingClientRect();
         window.scrollBy({
             top: cardHeight * 2,
             behavior: 'smooth',
         });
+        if (page >= totalPages) {
+            hideLoadMoreButton()
+            iziToast.info({
+                message: "We're sorry, but you've reached the end of search results.",
+                position: 'topRight'
+            })
+        }
 
     } catch (error) {
         console.log(error.message);
